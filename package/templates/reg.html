@@ -1,0 +1,121 @@
+{% extends 'land.html'%}
+{% block first%}
+	<div class="container-fluid first-sec">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="row justify-content-center">
+                    
+                    <div class="col-md-6">
+                        <form action="#" class="card form mx-3 p-5" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                            <h3 class="text-center">Sign Up!</h3>
+                            <div>
+                                {{usereg.fname.label}}
+                                {% if usereg.fname.errors %}
+                                {% for j in usereg.fname.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.fname(class_='form-control my-3 cust-input')}}
+                            </div>
+                            <div>
+                                {{usereg.lname.label}}
+                                {% if usereg.lname.errors %}
+                                {% for j in usereg.lname.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.lname(class_='form-control my-3 cust-input')}}
+                            </div>                            
+                            <div>
+                                {{usereg.email.label}}
+                                {% if usereg.email.errors %}
+                                {% for j in usereg.email.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.email(class_='form-control my-3 cust-input')}}
+                            </div>
+                            <div>
+                                <input type="text" hidden value="freeuse" name="status">
+                            </div>
+                            <div>
+                                {{usereg.address.label}}
+                                {% if usereg.address.errors %}
+                                {% for j in usereg.address.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.address(class_='form-control my-3 cust-input')}}
+                            </div>
+                            <div>
+                                {{usereg.username.label}}
+                                {% if usereg.username.errors %}
+                                {% for j in usereg.username.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.username(class_='form-control my-3 cust-input')}}
+                            </div>
+                            <div>
+                                {{usereg.phone.label}}
+                                {% if usereg.phone.errors %}
+                                {% for j in usereg.phone.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.phone(class_='form-control my-3 cust-input')}}
+                            </div>
+                            <div>
+                                {{usereg.pwd.label}}
+                                {% if usereg.pwd.errors %}
+                                {% for j in usereg.pwd.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.pwd(class_='form-control my-3 cust-input')}}
+                            </div>
+                            <div>
+                                {{usereg.confpwd.label}}
+                                {% if usereg.confpwd.errors %}
+                                {% for j in usereg.confpwd.errors %}
+                                <p style="color: red;">{{j}}</p>
+                                {%endfor%}
+                                {%endif%}
+                                {{usereg.confpwd(class_='form-control my-3 cust-input')}}
+                            </div>
+
+                            <div class="my-2">
+                                <input type="checkbox"> 
+                                <a href="#" style="text-decoration: none; color: rgb(145, 69, 69);">Read Terms and Conditons</a>
+                            </div>
+                            <div class="my-3">
+                                {{usereg.btnsubmit(class_='cust-btn text-white form-control')}}
+                                
+                            </div>
+                            <a href="{{url_for('login')}}" class="custom1">Already a member? Sign Up</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+        
+      
+
+        
+
+
+
+
+
+
+
+
+	    <script src="bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>     
+
+
+
+
+    </div>
+{%endblock%}

@@ -1,0 +1,340 @@
+{%extends './inni.html'%}
+
+	<div class="container-fluid">
+        {%block banner%}
+        <!-- This is the first section with carousel and background picture -->
+        <div class="row">
+            <div class="col-md-6 px-0 women-sec text-center">
+                <h1 class="text-white px-5" style="font-size: 40px; font-weight: bold;">BEST WOMEN FASHION</h1>
+            </div>
+            <div class="col-md-6 px-0 men-sec text-center">
+                <h1 class="text-white px-5" style="font-size: 40px; font-weight: bold;">MEN'S FASHION 50% OFF</h1>
+            </div>
+        </div>
+        {%endblock%}
+        <!-- End section -->
+
+        <!-- Section for content available on the website -->
+        {%block one %}
+        <section class="w3l-grids-hny-2">
+            <!-- /content-6-section -->
+            <div class="grids-hny-2-mian py-5">
+                <div class="container py-lg-5">
+                        
+                    <h2 class="hny-title mb-0 text-center">Shop With <span>Us</span></h2>
+                    <p class="mb-4 text-center">Handpicked Favourites just for you</p>
+                    <div class="welcome-grids row mt-5">
+                        <div class="col-lg-2 col-md-4 col-6 welcome-image">
+                                <div class="boxhny13">
+                                        <a href="{{url_for('handbags')}}">
+                                                <img src="/static/shopimg/grid1.jpg" class="img-fluid" alt="" />
+                                        <div class="boxhny-content">
+                                            <h3 class="title">Product
+                                        </div>
+                                    </a>
+                                </div>
+                                <h4><a href="{{url_for('handbags')}}">Hand Bags</a></h4>
+        
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-6 welcome-image">
+                                <div class="boxhny13">
+                                        <a href="{{url_for('watches')}}">
+                                                <img src="/static/shopimg/grid3.jpg" class="img-fluid" alt="" />
+                                        <div class="boxhny-content">
+                                            <h3 class="title">Product</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                                <h4><a href="{{url_for('watches')}}">
+                                        Watches</a></h4>
+        
+                            
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 welcome-image">
+                                <div class="boxhny13">
+                                        <a href="{{url_for('shoes')}}">
+                                                <img src="/static/shopimg/grid2.jpg" class="img-fluid" alt="" />
+                                        <div class="boxhny-content">
+                                            <h3 class="title">Product</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                                <h4><a href="{{url_for('shoes')}}">Shoes</a></h4>
+        
+                        
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 welcome-image">
+                                <div class="boxhny13">
+                                        <a href="{{url_for('suits')}}">
+                                                <img src="/static/shopimg/grid4.jpg" class="img-fluid" alt="" />
+                                        <div class="boxhny-content">
+                                            <h3 class="title">Product</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                                <h4><a href="{{url_for('suits')}}">Suits</a></h4>
+        
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 welcome-image">
+                                <div class="boxhny13">
+                                        <a href="{{url_for('accesories')}}">
+                                                <img src="/static/shopimg/grid5.jpg" class="img-fluid" alt="" />
+                                        <div class="boxhny-content">
+                                            <h3 class="title">Product</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                                <h4><a href="{{url_for('accesories')}}">
+                                        Accessories</a></h4>
+        
+                            
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6 welcome-image">
+                                <div class="boxhny13">
+                                        <a href="{{url_for('fragrance')}}">
+                                                <img src="/static/shopimg/grid6.jpg" class="img-fluid" alt="" />
+                                        <div class="boxhny-content">
+                                            <h3 class="title">Product</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                                <h4><a href="{{url_for('fragrance')}}">
+                                        Fragrances</a></h4>
+        
+                            
+                        </div>
+                    </div>
+        
+                </div>
+            </div>
+        </section>
+        {%endblock%}
+        <!-- End section -->
+
+        <!-- Section for PROMO -->
+        {% block two%}
+        <div class="row justify-content-center bg-light py-5">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6 p-5">
+                        <h3 class="text-left" style="padding-top: 50px; font-weight: bolder;">All Branded Men's Suits are Flat <span>30% Discount</span></h3>
+								<p>Visit our shop to see amazing creations from our designers.</p>
+								<a href="suits.html" class="btn btn-dark px-4 py-2" style="border-radius: 15px;">
+										Shop Now
+								</a>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/static/shopimg/1.jpg" style="border-radius: 10px;" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endblock%}
+        <!-- End Section -->
+
+        <!-- Section with content and py loop -->
+        <!-- //video-6-->
+        {%block three%}
+        <section class="w3l-ecommerce-main mt-3">
+            <!-- /products-->
+            <div class="ecom-contenthny py-5">
+                <div class="container py-lg-5 py-5">
+                    <h3 class="hny-title mb-0 text-center">Shop With <span>Us</span></h3>
+                    <p class="text-center">Handpicked Favourites just for you</p>
+                    <!-- /row-->
+                    <div class="ecom-products-grids row mt-lg-5 mt-3 justify-content-center">
+                        {% if shopdeets and userdeets%}
+                            {%for x in shopdeets%}
+                                <div class="col-lg-3 col-6 product-incfhny mt-4">
+                                    <div class="product-grid2 transmitv">
+                                        <div class="product-image2">
+                                            <a href="#">
+                                                <img class="pic-1 img-fluid" src="/static/uploads/{{x.front_img}}">
+                                                <img class="pic-2 img-fluid" src="/static/uploads/{{x.back_img}}">
+                                            </a>
+                                            <ul class="social">
+                                                    <li><a href="#" data-tip="Quick View"><span class="fa fa-eye"></span></a></li>
+
+                                                    <li><a href="#" data-tip="Add to Cart"><span class="fa fa-shopping-bag"></span></a>
+                                                    </li>
+                                            </ul>
+                                            <div class="transmitv single-item">
+                                                <form action="{{url_for('catp')}}" method="POST" >
+                                                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                                                        <input type="hidden" class="sell_id" name="sell_id" value="{{x.sell_id}}">
+                                                        <input type="hidden" class="img" name="img" value="{{x.front_img}}">
+                                                        <input type="hidden" class="price" name="price" value="{{x.price}}">
+                                                        <input type="hidden" class="quantity" name="quantity" value="{{x.quantity}}">
+                                                        <input type="hidden" class="description" name="description" value="{{x.description}}">
+                                                        <button id="btn" class="transmitv-cart ptransmitv-cart add-to-cart">
+                                                            Add to Cart
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <h3 class="title">{{ x.description}}</h3>
+                                            <span class="price"><del>&#8358; {{x.delprice}}0</del>&#8358; {{ x.price }}0</span>
+                                        </div>
+                                        <div id="feedback"></div>
+                                    </div>
+                                </div>
+                            {%endfor%}
+                        {%else%}
+                                <div class="text-center">
+                                    <h4 class="alert alert-info">No Product Available check back shortly</h4>
+                                </div>
+                        {%endif%}
+                                
+
+                    </div>
+                    <!-- //row-->
+                </div>
+            </div>
+        </section>
+        {%endblock%}
+        <!-- //products-->
+        <!-- End of the section -->
+
+        <!-- Furthermore shop more  -->
+        {%block four%}
+        <div class="row further-more justify-content-center">
+            <div class="col-md-5 text-center px-5">
+                <h1 class="text-white" style="padding-top: 130px;">
+                    Tons of Products & Options to
+                    <span>change</span></h1>
+                <p>Ea consequuntur illum facere aperiam sequi optio consectetur adipisicing elitFuga, suscipit totam
+                    animi consequatur saepe blanditiis.Lorem ipsum dolor sit amet,Ea consequuntur illum facere
+                    aperiam sequi optio consectetur adipisicing elit..</p>
+                <a href="#" class="btn btn-outline-light px-3 py-2" style="border-radius: 10px;">
+                    Shop Now
+                </a>
+            </div>
+        </div>
+        {%endblock%}
+        <!-- End of further-more shop -->
+
+        <!-- //content-6-section admin blog posr -->
+        {%block five%}
+        <section class="alpha-post-grids-6">
+            <!-- /post-grids-->
+            <div class="post-6-mian py-5">
+                <div class="container py-lg-5">
+                        <h1 class="text-center mb-0" style="font-size: 35px; font-weight: bold;">Latest Blog <span>Posts</span></h1>
+                        <p class="mb-5 text-center" style="font-size: 15px;">Handpicked Favourites just for you</p>
+                    <div class="post-hny-grids row mt-5">
+                        <div class="col-lg-3 col-md-6 grids5-info column-img" id="zoomIn">
+                            <a href="#">
+                                <figure>
+                                    <img class="img-fluid" src="/static/shopimg/bg1.jpg" alt="blog-image">
+                                </figure>
+                            </a>
+
+                            <div class="blog-thumbhny-caption">
+                                <ul class="blog-info-list">
+                                    <li><a href="#admin">By admin</a></li>
+                                    <li class="date-post">
+                                        Aug 10, 2020</li>
+                                </ul>
+                                <h4><a href="#">Here to bring your life style to the next level.</a></h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 grids5-info column-img" id="zoomIn">
+                            <a href="#">
+                                <figure>
+                                    <img class="img-fluid" src="/static/shopimg/bg2.jpg" alt="blog-image">
+                                </figure>
+                            </a>
+                            <div class="blog-thumbhny-caption">
+                                <ul class="blog-info-list">
+                                    <li><a href="#admin">By admin</a></li>
+                                    <li class="date-post">
+                                        Aug 10, 2020</li>
+                                </ul>
+                                <h4><a href="#">Here to bring your life style to the next level.</a></h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 grids5-info column-img" id="zoomIn">
+                            <figure>
+                                <img class="img-fluid" src="/static/shopimg/bg3.jpg" alt="blog-image">
+                            </figure>
+                            <div class="blog-thumbhny-caption">
+                                <ul class="blog-info-list">
+                                    <li><a href="#admin">By admin</a></li>
+                                    <li class="date-post">
+                                        Aug 10, 2020</li>
+                                </ul>
+                                <h4><a href="#">Here to bring your life style to the next level.</a></h4>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 grids5-info column-img" id="zoomIn">
+                            <figure>
+                                <img class="img-fluid" src="/static/shopimg/bg4.jpg" alt="blog-image">
+                            </figure>
+                            <div class="blog-thumbhny-caption">
+                                <ul class="blog-info-list">
+                                    <li><a href="#admin">By admin</a></li>
+                                    <li class="date-post">
+                                        Aug 10, 2020</li>
+                                </ul>
+                                <h4><a href="#">Here to bring your life style to the next level.</a></h4>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        {%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    {%block js%}
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $('transmitv-cart').click(function(event){
+            event.preventDefault();
+      // make ajax call using the $.post
+              
+              
+              var csrf = "{{csrf_token()}}"
+              var sell_id = $('sell_id').val()
+              var img = $('img').val()
+              var price = $('price').val()
+              var quantity = $('quantity').val()
+              var description = $('description').val()
+              var data2send = {"csrf_token":csrf,"sell_id":sell_id,"imd":img,"price":price,"quantiy":quantity,"description":description}
+              
+            $.post("/post_comment/",data2send,function(serverRsp){
+              $('#feedback').append(serverRsp)
+              $('#feedback').addClass('alert alert-info')
+      
+            })
+          })
+        })
+      </script>
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+     
+

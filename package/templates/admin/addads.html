@@ -1,0 +1,37 @@
+{%extends'admin/add.html'%}
+
+{%block content%}
+<div class="row" style="min-height: 100px;">
+    <div class="col-md-10  px-3">
+        <div class="row justify-content-center" style="margin-top: 50px; padding-bottom: 100px;">
+            <div class="col-md-5 px-2">
+                <form action="" enctype="multipart/form-data" method="POST" class="card px-5 mx-3" novalidate>
+                    {%set m= get_flashed_messages(with_categories=True)%}
+                                {%if m:%}
+                                    {%for x,y in m%}
+                                        {% if x =="error"%}
+                                            <div class="alert alert-info">{{y}}</div>
+                                        {%else:%}
+                                            <div class="alert alert-info">{{y}}</div>
+                                        {%endif%}
+                                    {%endfor%}
+                                    {%endif%}
+                    <h4 class="text-center pt-4">Upload Advert</h4>
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Advert Company</label>
+                        <input type="text" class="form-control" id="title" name="company">
+                
+                        </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="customFile">Upload Image</label>
+                        <input type="file" name="cover" class="form-control" id="customFile">
+                    </div>
+                    <button type="submit" class="btn btn-primary my-3">Add Advert!</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock content%}

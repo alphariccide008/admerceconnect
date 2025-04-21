@@ -1,0 +1,59 @@
+{%extends 'inni.html'%}
+
+        
+<!-- this is the first section -->
+    {% block banner%}
+    <div class="row lock justify-content-center" >
+        <div class="col-md-10">
+            <div class="row justify-content-center" style="margin-top: 100px; ">
+                <div class="col-md-5 px-2">
+                    <form action="" enctype="multipart/form-data" method="POST" class="card px-5 mx-3" novalidate>
+                        <h4 class="text-center pt-4">CHANGE PASSWORD</h4>
+                        {% set m = get_flashed_messages(with_categories=True)%}
+                            {% for x,y in m%}
+                                {% if x =='changeperror': %}
+                                    <div class="alert alert-danger text-center">{{y}}</div>
+                                {% else: %}
+                                    <div class="text-danger alert alert-info mt-2">{{y}}</div>
+                                {% endif %}
+                            {%endfor%}
+                        {{ changep.csrf_token}}
+                        <div class="mb-3 pt-3">
+                            {{ changep.email.label}}
+                            {{ changep.email(class_='form-control' )}} 
+                        </div>
+                        <div class="mb-3 pt-3">
+                            {{ changep.pwd.label}}
+                            {{ changep.pwd(class_='form-control' )}} 
+                        </div>
+                        <div class="mb-3 pt-3">
+                            {{ changep.newpwd.label}}
+                            {{ changep.newpwd(class_='form-control' )}} 
+                        </div>
+    
+                            <div>
+                            {{ changep.btnsubmit(class_='form-control bg-dark text-white mb-4' )}} 
+                        </div>
+    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endblock%}
+<!-- this is second section -->
+    {%block one%}
+       
+    {%endblock%}	
+		
+
+<!-- This is the thrid sec -->
+    {%block two%}
+	
+    {%endblock%}
+<!-- This is the end of the Thrid section -->
+    {%block three%}
+
+    {%endblock%}
+
+

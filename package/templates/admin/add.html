@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- <link rel="shortcut icon" href="/static/img/icons/icon-48x48.png" /> -->
+
+    <link rel="canonical" href="https://demo-basic.adminkit.io/" />
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <title>LOFART</title>
+
+    <link href="/static/css/app.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<style type="text/css">
+    body{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    }
+</style>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" class="sidebar bg-danger js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="#">
+          <span class="align-middle">CartAvril</span>
+        </a>
+
+				<ul class="sidebar-nav">
+					<li class="sidebar-header">
+						Pages
+					</li>
+
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="/admin/alluser/">
+              <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">All User</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/addjob/">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Post Jobs</span>
+            </a>
+					</li>
+
+					
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="/admin/addads/">
+              <i class="align-middle" data-feather="square"></i> <span class="align-middle">Post ADS</span>
+            </a>
+					</li>
+
+					
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="#">
+              <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">All Order</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="#">
+              <i class="align-middle" data-feather="map"></i> <span class="align-middle">Transaction History</span>
+            </a>
+					</li>
+				</ul>
+
+				
+			</div>
+		</nav>
+
+
+        <div class="main">
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+          <i class="hamburger align-self-center"></i>
+        </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							
+							
+						</li>
+					
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block " href="#" data-bs-toggle="dropdown">
+                <i class="align-middle" data-feather="settings"></i>
+              </a>
+				
+							<div class="dropdown-menu dropdown-menu-end">
+							
+								<a class="dropdown-item" href="#">Log out</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+           
+
+            {% block content%}
+            
+            {% endblock content%}
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        
+                        
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    {% block customjs%}
+    {% endblock%}
+
+    
+
+</body>
+
+</html>
