@@ -1,0 +1,64 @@
+{% extends "admin/add.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-12">
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <h1 class="text-center py-5">Transaction History</h1>
+                <div class="row justify-content-center">
+                    {% if userdeets %}
+                        <table class="table table-striped text-center table-bordered bg-white">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Image</th>
+                                    <th>Reference No.</th>
+                                    <th>Product Price</th>
+                                    <th>Product Name</th>
+                                    <th>Product Status</th> 
+                                    <th>Product Quantity</th>
+                                    <th>Date Ordered</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in userdeets %}
+                                <tr>
+                                    <td>{{ loop.index }}.</td>
+                                    <td>{{ transaction.name }}</td>
+                                    <td>{{ transaction.email }}</td>
+                                    <td>{{ transaction.address }}</td>
+                                    <td class="py-5">
+                                        <img src="/static/uploads/{{ transaction.img or 'default-image.jpg' }}" 
+                                        class="img-fluid rounded" style="height: 60px;" 
+                                        alt="{{ transaction.name }}">
+                                    </td>
+                                    <td>{{ transaction.reference }}</td>
+                                    <td>₦{{ transaction.amount / 100 }}</td>  <!-- Convert amount from kobo to naira -->
+                                    <td>{{ transaction.product_description }}</td>
+                                    <td>{{ transaction.shipment_status }}</td>
+                                    <td>{{ transaction.quantities }}</td>
+                                    <td>{{ transaction.timestamp }}</td>
+                                    <td>
+                                        <a href="{{ url_for('product_confirm', di=transaction.id) }}" class="btn btn-success">Confirm</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-info text-center">
+                            No transactions found.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

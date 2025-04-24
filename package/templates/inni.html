@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
-	<title>CartAvril</title>
+	<title>AdmerceConnect</title>
 	<Link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/all.min.css">
     <link rel="stylesheet" href="/static/css/job.css">
@@ -421,10 +421,7 @@
             box-sizing: border-box;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
-        .alpha-post-grids-6 {
-        /* Zoom In css starts here */
-        /* Zoom In css ends here */
-        }
+      
 
         .alpha-post-grids-6 ul.blog-info-list {
         display: flex;
@@ -510,9 +507,7 @@
             margin-bottom: 2em;
         }
         }
-        .w3l-ecommerce-main {
-        /********************* Shopping Demo-2 **********************/
-        }
+     
 
         .w3l-ecommerce-main .ecom-top-grids {
         background: var(--theme-dark-lite);
@@ -1143,6 +1138,25 @@
 			font-family: sans-serif;
 			
         }
+
+        .cart-badge {
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 50%;
+  position: absolute;
+
+}
+
+@media (max-width: 768px) {
+  .cart-badge {
+      position:relative;
+      right: 0px; /* Adjust for smaller screens */
+      top: 0px; /* Slightly adjust position */
+      font-size: 8px; /* Smaller badge on smaller screens */
+  }
+}
 	</style>
 </head>
 <body>
@@ -1152,7 +1166,7 @@
 			<div class="col">
 						<nav class="navbar navbar-expand-lg bg-light">
   <div class="container">
-    <h1><a class="navbar-brand" href="#"><span class="custom">CartAril</span></a></h1>
+    <h1><a class="navbar-brand" href="#"><span class="custom">AdmerceConnect</span></a></h1>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -1164,12 +1178,24 @@
         <li class="nav-item px-3">
           <a class="nav-link active" aria-current="page" href="{{url_for('job')}}"><i class="fa-solid  fa-school"></i></a>
         </li>
-        <li class="nav-item px-3">
-          <a class="nav-link active" aria-current="page" href="{{url_for('shop')}}"><i class="fa-solid  fa-shop"></i></a>
-        </li>
-        <li class="nav-item px-3">
-            <a class="nav-link active" aria-current="page" href="{{url_for('cart')}}"><i class="fa-solid  fa-cart-shopping"></i></i></a>
+        <li class="nav-item dropdown px-3">
+            <a class="nav-link dropdown-toggle active" href="{{ url_for('shop') }}" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-shop"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="shopDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('shop') }}">Shop Home</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('men') }}">Men</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('women') }}">Jewelries</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('handbags') }}">Handbag</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('fragrance') }}">Fragrance</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('suits') }}">Suit</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('watches') }}">Watches</a></li>
+            </ul>
           </li>
+        <li class="nav-item"><a class="nav-link px-3 " href="{{ url_for('cart')}}"><i class="fas fa-shopping-cart"></i>
+            <span class="cart-badge">{{ cart_count }}</span>
+       
+          </a></li>
         <li class="nav-item dropdown">
             <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
 <i class="align-middle" data-feather="settings"></i>
@@ -1339,7 +1365,7 @@
             </div>
         </div>
         <div class="copyright mt-4">
-            <p class="copy-right text-center ">&copy; 2023 Cartavril. All Rights Reserved | Design by
+            <p class="copy-right text-center ">&copy; 2025 AdmerceConnect. All Rights Reserved | Design by
                
             </p>
         </div>
@@ -1480,7 +1506,7 @@
         <a class="form control btn btn-outline-dark mb-2"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa-solid fa-user"></i> My Account</button>   
         <a href="{{url_for('job')}}" class="form control btn btn-outline-dark mb-2"><i class="fa-solid fa-envelope"></i> Find Jobs</a>    
         <a href="{{url_for('shop')}}" class="form control btn btn-outline-dark mb-2"> <i class="fa-solid fa-building"></i> shop</a>    
-        <a href="{{url_for('cart')}}" class="form control btn btn-outline-dark mb-2"> <i class="fa-solid fa-cart-shopping"></i> Cart</a>    
+        <a href="" class="form control btn btn-outline-dark mb-2"> <i class="fa-solid fa-cart-shopping"></i> Cart</a>    
         <a href="#" class="form control btn btn-outline-dark mb-2"> <i class="fa-solid fa-dollar-sign"></i> Transaction History</a>    
 
         <a href="{{url_for('login')}}" class="form control btn btn-outline-dark mb-2"><i class="fa-solid fa-user"></i> Logout</a>    

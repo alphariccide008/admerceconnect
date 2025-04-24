@@ -1,99 +1,86 @@
-{%extends 'inni.html'%}
-        <!-- This is the start of the cart section -->
-        {%block banner%}
-        <div class="row justify-content-center pt-5">
-            <div class="col-md-11">
-                <div class="row">
-                    <div class="col-md-8" style="border-right: solid 1px rgba(167, 164, 164, 0.8);">
-                        <h2 class="pt-5 pb-3 text-center">Shopping Cart</h2>
-                        <hr>
-                        <table class="table table-hover text-center">
-                            <thead>
-                              <tr class="text-center">
-                                <td scope="col"></td>
-                                <td scope="col"></td>
-                                <td scope="col">Product</td>
-                                <td scope="col">Price</td>
-                                <td scope="col">Qty</td>
-                                <td scope="col">Subtotal</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="">
-                                <td class="my-3"><a href="" style="text-decoration: none; color: black;">x</a></td>
-                                <td><img src="/static/shopimg/shop-22.jpg" alt="" height="150" width="80" style="border-radius: 5px;"></td>
-                                <td>pink shirt</td>
-                                <td>&#8358;5000</td>
-                                <td>1</td>
-                                <td>&#8358;5000</td>
-                              </tr>
-                              <tr>
-                                <td><a href="" style="text-decoration: none; color: black;">x</a></td>
-                                <td><img src="/static/shopimg/shop-1.jpg" alt="" height="150" width="100%" style="border-radius: 5px;"></td>
-                                <td>Wine shirt</td>
-                                <td>&#8358;5000</td>
-                                <td>1</td>
-                                <td>&#8358;5000</td>
-                              </tr>
-                              <tr>
-                                <td><a href="" style="text-decoration: none; color: black;">x</a></td>
-                                <td><img src="/static/shopimg/shop-4.jpg" alt="" height="150" width="100%" style="border-radius: 5px;"></td>
-                                <td>Red shirt</td>
-                                <td>&#8358;5000</td>
-                                <td>1</td>
-                                <td>&#8358;5000</td>
-                              </tr>
-                            </tbody>
-                          </table>
+{% extends 'inni.html' %}
+
+{% block banner %}
+<!-- Shopping Cart Hero section -->
+<section>
+    <div class="row justify-content-center">
+        {% if items %}
+        <div class="col-md-10">
+            <h1 class="section-title px-4" style="padding-top: 10%;">SHOPPING CART</h1>
+            <div class="row px-4 pt-5">
+                <div class="col-md-8">
+                    <div class="row justify-content-center">
+                        <div class="col-md-5 text-center alert  text-white">
+                          {% set m = get_flashed_messages(with_categories=True)%}
+                          {% for x,y in m%}
+                              {% if x =='editprofile': %}
+                                  <div class="alert alert-info text-center">{{y}}</div>
+                              {% else: %}
+                                  <div class="text-danger mt-2">{{y}}</div>
+                              {% endif %}
+                          {%endfor%}                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <h2 class="pt-5 pb-3 text-center">Cart Totals</h2>
-                        <hr>
-                        <table class="table table-hover text-center">
-                            <thead>
-                              <tr class="text-center">
-                                <td scope="col">Subtotal</td>
-                                <td scope="col"></td>
-                                <td scope="col"></td>
-                                <td scope="col"></td>
-                                <td scope="col"></td>
-                                <td scope="col">&#8358;5000</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="">
-                                <td>Total</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>&#8358;5000</td>
-                              </tr>
-                             
-                          </table>
-                          <div class="text-center pt-4">
-                            <a href="#" class="btn px-5 text-center btn-dark"> CHECKOUT</a>
-                          </div>
-                        
-                        <hr>
-                        
+                    <table class="table table-borderless">
+                        <tbody>
+                            {% for item in items %}
+                            <tr class="section-description pt-4">
+                                <td class="pt-4" style="font-size: 12px;">
+                                  <a href="{{ url_for('remove_from_cart', item_id=item.goods_id) }}" class="text-danger" style="cursor: pointer;">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                                </td>
+                                <td>
+                                    <img src="/static/uploads/{{ item.img or 'default-image.jpg' }}" class="img-fluid rounded" style="height: 60px;" alt="{{ item.description }}">
+                                </td>
+                                <td class="pt-4">{{ item.description }}</td>
+                                <td class="p-4">&#8358;{{ item.price * item.quantity }}0</td>
+                                <td class="p-4">{{ item.quantity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <hr>
+                    <a class="section-description" href="{{ url_for('shop') }}">
+                        <i class="fas fa-arrow-left"> Go Back Shopping</i>
+                    </a>
+                </div>
+                <div class="col-md-4 py-5">
+                    <h1 class="pb-3 section-title">CART TOTALS</h1>
+                    <p class="section-description">SUBTOTAL: &#8358;{{ total }}0</p>
+                    <p class="section-description">SHIPPING: Free Shipping</p>
+                    <hr>
+                    <div class="d-flex">
+                        <h1 class="section-title">TOTAL</h1>
+                        <h4 class="text-end pt-2" style="padding-left: 35%;">&#8358;{{ total }}0</h4>
                     </div>
+
+                    <!-- Checkout Form -->
+                    <form action="{{ url_for('checkout')}}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="form-group">
+                            <label for="fullname">FullName</label>
+                            <input type="text" name="name" id="fullname" class="form-control" value="{{ userdeets.firstname}} {{ userdeets.firstname}}" required placeholder="{{ userdeets.firstname}} {{ userdeets.firstname}}">
+                            <label for="email">Email Address</label>
+                            <input type="email" name="email" id="email" class="form-control" value="{{ userdeets.email }}" required placeholder="{{ userdeets.email}}">
+                            <label for="address">Address</label>
+                            <input type="text" name="address" id="address" class="form-control" value="{{ userdeets.address }}" required placeholder="{{ userdeets.address}}">
+                        </div>
+
+                        <button class="form-control btn btn-dark mt-3" type="submit">PROCEED TO CHECKOUT</button>
+                    </form>
                 </div>
             </div>
         </div>
-        {%endblock%}
-        <!-- End of Cart -->
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
+        {% else %}
+        <div class="row justify-content-center" style="margin-top: 100px;">
+            <div class="col-md-6 text-center">
+                <h1>Your Cart is Empty</h1>
+                <a href="{{ url_for('shop') }}" class="my-5 btn btn-dark text-white">
+                    <i class="fas fa-arrow-left"></i> View All Products
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock banner %}

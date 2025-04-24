@@ -7,7 +7,7 @@ class User(db.Model):
     firstname=db.Column(db.String(60),nullable=False)
     lastname=db.Column(db.String(60),nullable=False)
     email=db.Column(db.String(128),unique=True,nullable=False)
-    city=db.Column(db.String(300),nullable=False)
+    city=db.Column(db.String(300),nullable=True)
     password=db.Column(db.String(300),nullable=False)
     phone = db.Column(db.BigInteger(),unique=True,nullable=False)  #phone number should be unique
     address= db.Column(db.String(300),nullable=False)
@@ -20,15 +20,15 @@ class Admin(db.Model):
     email=db.Column(db.String(128),nullable=False)
     pwd=db.Column(db.String(300),nullable=True)
 
-class Sell(db.Model):
-    sell_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
+class Product(db.Model):
+    product_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
     front_img=db.Column(db.String(300),nullable=False)
     back_img=db.Column(db.String(300),nullable=False)
     price=db.Column(db.Float())
     delprice=db.Column(db.Float())
     quantity=db.Column(db.Integer(),nullable=False)
     description=db.Column(db.String(300),nullable=False)
-    seller_user_id=db.Column(db.Integer(),db.ForeignKey("user.user_id"))
+    seller_user_id=db.Column(db.Integer(),db.ForeignKey("user.user_id"),nullable=False)
 
 class Cart(db.Model):
     cart_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
@@ -36,8 +36,9 @@ class Cart(db.Model):
     quantity=db.Column(db.Integer(),nullable=False)
     description=db.Column(db.String(300),nullable=False)
     img=db.Column(db.String(300),nullable=False)
-    seller_user_id=db.Column(db.Integer(),db.ForeignKey("user.user_id"))
-    goods_id=db.Column(db.Integer(),db.ForeignKey("sell.sell_id"))
+    seller_id= db.Column(db.Integer(),nullable=False)
+    user_id=db.Column(db.Integer(),db.ForeignKey("user.user_id"))
+    goods_id=db.Column(db.Integer(),db.ForeignKey("product.product_id"))
 
 class Category(db.Model):
     category_id=db.Column(db.Integer(), primary_key=True,autoincrement=True)
@@ -58,4 +59,24 @@ class Adverts(db.Model):
     ads_company=db.Column(db.String(300),nullable=False)
     ads_cover = db.Column(db.String(100)) 
     ads_Link = db.Column(db.String(100))
+
+
+
+class Transaction(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    amount = db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    status = db.Column(db.String(50))
+    reference = db.Column(db.String(100))
+    product_description = db.Column(db.String(500))  # To store comma-separated product names
+    quantities = db.Column(db.String(500))  # To store comma-separated quantities
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(300), nullable=False)
+    img = db.Column(db.String(300), nullable=False)
+    shipment_status = db.Column(db.String(300), nullable=True)
+
+    # Relationship to User model (if needed)
+    user = db.relationship('User', backref='transactions', lazy=True)
 

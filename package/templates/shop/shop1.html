@@ -144,7 +144,7 @@
                     <p class="text-center">Handpicked Favourites just for you</p>
                     <!-- /row-->
                     <div class="ecom-products-grids row mt-lg-5 mt-3 justify-content-center">
-                        {% if shopdeets and userdeets%}
+                        {% if shopdeets %}
                             {%for x in shopdeets%}
                                 <div class="col-lg-3 col-6 product-incfhny mt-4">
                                     <div class="product-grid2 transmitv">
@@ -156,21 +156,15 @@
                                             <ul class="social">
                                                     <li><a href="#" data-tip="Quick View"><span class="fa fa-eye"></span></a></li>
 
-                                                    <li><a href="#" data-tip="Add to Cart"><span class="fa fa-shopping-bag"></span></a>
+                                                    <li><a href="{{ url_for('cart')}}" data-tip="Add to Cart"><span class="fa fa-shopping-bag"></span></a>
                                                     </li>
                                             </ul>
                                             <div class="transmitv single-item">
-                                                <form action="{{url_for('catp')}}" method="POST" >
-                                                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
-                                                        <input type="hidden" class="sell_id" name="sell_id" value="{{x.sell_id}}">
-                                                        <input type="hidden" class="img" name="img" value="{{x.front_img}}">
-                                                        <input type="hidden" class="price" name="price" value="{{x.price}}">
-                                                        <input type="hidden" class="quantity" name="quantity" value="{{x.quantity}}">
-                                                        <input type="hidden" class="description" name="description" value="{{x.description}}">
-                                                        <button id="btn" class="transmitv-cart ptransmitv-cart add-to-cart">
+                                                
+                                                        <a id="btn" href="{{ url_for('add_to_cart', item_id=x.product_id) }}" class="transmitv-cart ptransmitv-cart add-to-cart">
                                                             Add to Cart
-                                                        </button>
-                                                    </form>
+                                                        </a>
+                                                    
                                                 </div>
                                         </div>
                                         <div class="product-content">

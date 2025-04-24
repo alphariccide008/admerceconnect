@@ -2,12 +2,14 @@ import random,string
 import json,requests
 from functools import wraps
 from werkzeug.security import generate_password_hash,check_password_hash
+from flask_mail import Message
+from package import mail 
 from flask import render_template,request,abort,redirect,flash,make_response,session,url_for,jsonify
 
 #local Imports
 
 from package import app,csrf
-from package.models import db,User,Job,Sell,Cart, Adverts
+from package.models import db,User,Job,Product,Cart, Adverts, Transaction
 from package.forms import *
 
 #create after_request to clear cache
@@ -47,7 +49,7 @@ def upload():
         return render_template('/upload.html',upload=upload,userdeets=userdeets)
     else:
          if request.method =='GET':
-            deets= db.session.query(Sell).all()
+            deets= db.session.query(Product).all()
             return render_template('/upload.html',deets=deets,userdeets=userdeets)
          else:
             #retrieve the file
@@ -79,7 +81,7 @@ def upload():
             price =request.form.get('productprice')
             delprice=request.form.get('delprice')
             quantity =request.form.get('quantity')
-            uploader =Sell(price=price,delprice=delprice, description=desc ,front_img=newfile,back_img=newfile1,seller_user_id =id,quantity=quantity)
+            uploader =Product(price=price,delprice=delprice, description=desc ,front_img=newfile,back_img=newfile1,seller_user_id =id,quantity=quantity)
             db.session.add(uploader)
             db.session.commit()
             return redirect(url_for('shop'))
@@ -93,12 +95,7 @@ def index():
     advert = db.session.query(Adverts).all()
     return render_template('/index.html',userdeets=userdeets, advert=advert)
 
-@app.route('/cart',methods=['POST','GET'])
-@login_required
-def cart():
-    id= session.get('userloggedin')
-    userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/cart.html',userdeets=userdeets)
+
 
 @app.route('/copy',methods=['POST','GET'])
 def copy():
@@ -216,7 +213,7 @@ def women():
 def shop():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    shopdeets= db.session.query(Sell).all()
+    shopdeets= db.session.query(Product).all()
     return render_template('/shop/shop1.html',userdeets=userdeets,shopdeets=shopdeets)
 
 @app.route('/logout')
@@ -283,17 +280,175 @@ def editp():
         
 
 
-@app.route('/add_cart',methods=['POST'])
-@login_required
-def catp():
-    sell_id = request.form.get("sell_id")
-    userid = session['userloggedin']
-    img = request.form.get("img")
-    price = request.form.get("price")
-    quantity = request.form.get("quantity")
-    description = request.form.get("description")
-    query = Cart(price=price,goods_id=sell_id,img=img,quantity=quantity,description=description,seller_user_id=userid)
-    db.session.add(query)
+# All cart route 
+@app.route("/add-to-cart/<int:item_id>")
+def add_to_cart(item_id):
+    user_id = session.get('userloggedin')  # Assuming your session key is 'userloggedin'
+    if not user_id:
+        return redirect(url_for('login'))  # Redirect if user is not logged in
+
+    # Fetch the product from DB
+    product = Product.query.get_or_404(item_id)
+
+    # Check if the product already exists in the cart
+    existing_item = Cart.query.filter_by(user_id=user_id, goods_id=item_id).first()
+
+    if existing_item:
+        # If it exists, increment the quantity
+        existing_item.quantity += 1
+    else:
+        # Otherwise, add it as a new item
+        new_item = Cart(
+            user_id=user_id,
+            goods_id=product.product_id,
+            img=product.front_img,  # Assuming your product model has an 'img' field
+            price=product.price,
+            quantity=1,
+            seller_id = product.seller_user_id,
+            description=product.description
+        )
+        db.session.add(new_item)
+
     db.session.commit()
-    return ("sent to database")
+    return redirect(url_for('shop'))
     
+
+
+@app.context_processor
+def inject_cart_count():
+    user_id = session.get('userloggedin')
+    count = Cart.query.filter_by(user_id=user_id).count() if user_id else 0
+    return dict(cart_count=count)
+
+
+@app.route("/cart")
+@login_required
+def cart():
+    user_id = session.get('userloggedin')  # Get user ID from session
+    if not user_id:
+        return redirect(url_for('login'))  # Redirect if not logged in
+
+    # Retrieve the logged-in user and their cart items
+    userdeets = db.session.query(User).get_or_404(user_id)
+
+    # Get items in the cart along with associated product details
+    cart_items = Cart.query.filter_by(user_id=userdeets.user_id).all()
+
+    # Calculate total price for all items in cart
+    total = sum(item.price * item.quantity for item in cart_items)
+
+    return render_template('/cart.html', items=cart_items, total=total, userdeets=userdeets)
+
+
+
+@app.route("/remove-from-cart/<int:item_id>")
+def remove_from_cart(item_id):
+    user_id = session.get('userloggedin')
+    if not user_id:
+        return redirect(url_for('login'))  # Redirect if user is not logged in
+    
+    # Fetch the cart item to be removed
+    cart_item = Cart.query.filter_by(goods_id=item_id, user_id=user_id).first()
+    
+    if cart_item:
+        db.session.delete(cart_item)  # Delete the item from the database
+        db.session.commit() # Commit the changes to the database
+    
+    return redirect(url_for('cart')) 
+
+
+
+# Payment Gatewayfrom flask_mail import Message
+@app.route("/checkout", methods=["POST", "GET"])
+def checkout():
+    user_id = session.get('userloggedin')
+    if not user_id:
+        return redirect(url_for('login'))
+
+    cart_items = Cart.query.filter_by(user_id=user_id).all()
+    if not cart_items:
+        flash("Your cart is empty.", "danger")
+        return redirect(url_for('cart'))
+
+    total_amount = sum(item.price * item.quantity for item in cart_items) * 100
+
+    product_names = [item.description for item in cart_items]
+    product_quantities = [str(item.quantity) for item in cart_items]
+    product_images = [item.img for item in cart_items]
+
+    product_description = ", ".join(product_names)
+    quantities_str = ", ".join(product_quantities)
+    images_str = ", ".join(product_images)
+
+    name = request.form["name"]
+    email = request.form["email"]
+    address = request.form["address"]
+
+    transaction = Transaction(
+        user_id=user_id,
+        amount=total_amount,
+        status="pending",
+        reference="",
+        name=name,
+        email=email,
+        address=address,
+        product_description=product_description,
+        quantities=quantities_str,
+        img=images_str,
+        shipment_status="pending"
+    )
+    db.session.add(transaction)
+    db.session.commit()
+
+    # ✅ Send order summary email
+    try:
+        msg = Message("Your Order Summary", recipients=[email])
+        msg.body = f"""Hi {name},Thank you for shopping with AdcomerceConnect! Here is a summary of your order:
+
+        Products: {product_description}
+        Quantities: {quantities_str}
+        Shipping Address: {address}
+        Total Amount: ₦{total_amount / 100:.2f}
+
+        We will notify you once the payment is complete and your order is on its way.
+
+        Best regards,
+        AdmerceConnect Team
+                """
+        mail.send(msg)
+    except Exception as e:
+        flash(f"Could not send email: {str(e)}", "warning")
+
+    # Initialize Paystack
+    headers = {
+        "Authorization": "Bearer sk_test_f3f650ddd241d9c89f13c3d9468162052fcc8152",
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "email": email,
+        "amount": total_amount,
+        "callback_url": url_for("shop", _external=True),
+        "metadata": {"product_description": product_description}
+    }
+
+    try:
+        res = requests.post("https://api.paystack.co/transaction/initialize", json=data, headers=headers)
+        response_data = res.json()
+
+        if res.status_code == 200 and response_data["status"]:
+            transaction.reference = response_data["data"]["reference"]
+            db.session.commit()
+
+            # Clear cart
+            Cart.query.filter_by(user_id=user_id).delete()
+            db.session.commit()
+
+            return redirect(response_data["data"]["authorization_url"])
+        else:
+            flash("Payment initialization failed: " + response_data.get("message", "Unknown error"), "danger")
+            return redirect(url_for('cart'))
+
+    except Exception as e:
+        flash(f"Error: {str(e)}", "danger")
+        return redirect(url_for('cart'))
