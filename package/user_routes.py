@@ -77,11 +77,14 @@ def upload():
                     flash("Not Allowed, File Type Must Be ['jpg','png'], File was not uploades",category='error')
             newfile=newname
             newfile1=newname1
+            product_name = request.form.get('product_name')
+            seller = request.form.get('seller')
+            seller_phone =request.form.get('seller_number')
             desc=request.form.get('productdescription')
             price =request.form.get('productprice')
             delprice=request.form.get('delprice')
             quantity =request.form.get('quantity')
-            uploader =Product(price=price,delprice=delprice, description=desc ,front_img=newfile,back_img=newfile1,seller_user_id =id,quantity=quantity)
+            uploader =Product(price=price,delprice=delprice,seller_name=seller,product_name=product_name, seller_number=seller_phone, description=desc ,front_img=newfile,back_img=newfile1,seller_user_id =id,quantity=quantity)
             db.session.add(uploader)
             db.session.commit()
             return redirect(url_for('shop'))
@@ -304,6 +307,9 @@ def add_to_cart(item_id):
             img=product.front_img,  # Assuming your product model has an 'img' field
             price=product.price,
             quantity=1,
+            product_name=product.product_name,
+            seller_name=product.seller_name,
+            seller_number=product.seller_number,
             seller_id = product.seller_user_id,
             description=product.description
         )
@@ -372,13 +378,17 @@ def checkout():
 
     total_amount = sum(item.price * item.quantity for item in cart_items) * 100
 
-    product_names = [item.description for item in cart_items]
+    product_names = [item.product_name for item in cart_items]
+
     product_quantities = [str(item.quantity) for item in cart_items]
     product_images = [item.img for item in cart_items]
+   
 
-    product_description = ", ".join(product_names)
+    product_name = ", ".join(product_names)
     quantities_str = ", ".join(product_quantities)
     images_str = ", ".join(product_images)
+    seller_names = ', '.join([item.seller_name for item in cart_items])
+    seller_numbers = ', '.join([item.seller_number for item in cart_items])
 
     name = request.form["name"]
     email = request.form["email"]
@@ -392,7 +402,9 @@ def checkout():
         name=name,
         email=email,
         address=address,
-        product_description=product_description,
+        seller_name=seller_names,
+        seller_number=seller_numbers,
+        product_name=product_name,
         quantities=quantities_str,
         img=images_str,
         shipment_status="pending"
@@ -405,7 +417,7 @@ def checkout():
         msg = Message("Your Order Summary", recipients=[email])
         msg.body = f"""Hi {name},Thank you for shopping with AdcomerceConnect! Here is a summary of your order:
 
-        Products: {product_description}
+        Products: {product_name}
         Quantities: {quantities_str}
         Shipping Address: {address}
         Total Amount: ₦{total_amount / 100:.2f}
@@ -429,7 +441,7 @@ def checkout():
         "email": email,
         "amount": total_amount,
         "callback_url": url_for("shop", _external=True),
-        "metadata": {"product_description": product_description}
+        "metadata": {"product_description": product_name}
     }
 
     try:

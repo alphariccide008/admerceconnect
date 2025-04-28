@@ -22,10 +22,13 @@ class Admin(db.Model):
 
 class Product(db.Model):
     product_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
+    product_name=db.Column(db.String(300),nullable=False)
     front_img=db.Column(db.String(300),nullable=False)
     back_img=db.Column(db.String(300),nullable=False)
     price=db.Column(db.Float())
     delprice=db.Column(db.Float())
+    seller_name = db.Column(db.String(300), nullable=False)
+    seller_number = db.Column(db.String(20), nullable=False)
     quantity=db.Column(db.Integer(),nullable=False)
     description=db.Column(db.String(300),nullable=False)
     seller_user_id=db.Column(db.Integer(),db.ForeignKey("user.user_id"),nullable=False)
@@ -33,9 +36,12 @@ class Product(db.Model):
 class Cart(db.Model):
     cart_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
     price=db.Column(db.Float(),nullable=False)
+    product_name=db.Column(db.String(300),nullable=False)
     quantity=db.Column(db.Integer(),nullable=False)
     description=db.Column(db.String(300),nullable=False)
     img=db.Column(db.String(300),nullable=False)
+    seller_name = db.Column(db.String(300), nullable=False)
+    seller_number = db.Column(db.String(20), nullable=False)
     seller_id= db.Column(db.Integer(),nullable=False)
     user_id=db.Column(db.Integer(),db.ForeignKey("user.user_id"))
     goods_id=db.Column(db.Integer(),db.ForeignKey("product.product_id"))
@@ -69,8 +75,11 @@ class Transaction(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(50))
     reference = db.Column(db.String(100))
-    product_description = db.Column(db.String(500))  # To store comma-separated product names
+     # To store comma-separated product names
     quantities = db.Column(db.String(500))  # To store comma-separated quantities
+    seller_name = db.Column(db.String(300), nullable=False)
+    seller_number = db.Column(db.String(20), nullable=False)
+    product_name=db.Column(db.String(300),nullable=False)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     address = db.Column(db.String(300), nullable=False)

@@ -20,6 +20,8 @@
                                     <th>Product Price</th>
                                     <th>Product Name</th>
                                     <th>Product Status</th> 
+                                    <th>seller name</th>
+                                    <th>Seller N0</th>
                                     <th>Product Quantity</th>
                                     <th>Date Ordered</th>
                                     <th>Action</th>
@@ -39,8 +41,10 @@
                                     </td>
                                     <td>{{ transaction.reference }}</td>
                                     <td>₦{{ transaction.amount / 100 }}</td>  <!-- Convert amount from kobo to naira -->
-                                    <td>{{ transaction.product_description }}</td>
+                                    <td>{{ transaction.product_name }}</td>
                                     <td>{{ transaction.shipment_status }}</td>
+                                    <td>{{ transaction.seller_name }} </td>
+                                    <td>{{ transaction.seller_number }}</td>
                                     <td>{{ transaction.quantities }}</td>
                                     <td>{{ transaction.timestamp }}</td>
                                     <td>

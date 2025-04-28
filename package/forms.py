@@ -15,6 +15,7 @@ class RegForm(FlaskForm):
     btnsubmit=SubmitField("Register")
 
 class Uploadfile(FlaskForm):
+    product_name= StringField("Product Name",validators=[DataRequired(message="Product name")])
     frontimg = FileField("Front Image",validators=[FileAllowed(['jpg','png','jpeg'])])
     backimg = FileField("Back Image",validators=[FileAllowed(['jpg','png','jpeg'])])
     productdescription = TextAreaField("Description",validators=[DataRequired(message="Please Input A description")])

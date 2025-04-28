@@ -2,6 +2,8 @@ import random,string,os
 import json,requests
 from functools import wraps
 from werkzeug.security import generate_password_hash,check_password_hash
+from flask_mail import Message
+from package import mail 
 from flask import render_template,request,abort,redirect,flash,make_response,session,url_for,jsonify
 
 from package import app,csrf
@@ -161,7 +163,15 @@ def payment_confirm(di):
     if transaction:  # Check if the transaction exists
         transaction.shipment_status = 'shipped'  # Update shipment status to 'shipped'
         db.session.commit()
-        flash('Product shipped', category='paymentmsg')
+
+        try:
+            msg = Message("Order Status", recipients=[transaction.email])
+            msg.body = f""" Your Order has been Shipped
+                    """
+            mail.send(msg)
+        except Exception as e:
+            flash(f"Could not send email: {str(e)}", "warning")
+            flash('Product shipped', category='paymentmsg')
     else:
         flash('Transaction not found', category='danger')
 
@@ -184,7 +194,7 @@ def notifications():
             'email': order.email,
             'amount': order.amount,
             'timestamp': order.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-            'product_names': order.product_description,
+            'product_names': order.product_name,
         })
 
     return jsonify(notifications)
