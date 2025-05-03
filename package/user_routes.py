@@ -84,7 +84,8 @@ def upload():
             price =request.form.get('productprice')
             delprice=request.form.get('delprice')
             quantity =request.form.get('quantity')
-            uploader =Product(price=price,delprice=delprice,seller_name=seller,product_name=product_name, seller_number=seller_phone, description=desc ,front_img=newfile,back_img=newfile1,seller_user_id =id,quantity=quantity)
+            category = request.form.get('category')
+            uploader =Product(price=price,delprice=delprice,seller_name=seller ,category=category,product_name=product_name, seller_number=seller_phone, description=desc ,front_img=newfile,back_img=newfile1,seller_user_id =id,quantity=quantity)
             db.session.add(uploader)
             db.session.commit()
             return redirect(url_for('shop'))
@@ -170,43 +171,50 @@ def accesories():
 def fragrance():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/fragrance.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='fragrance').all()
+    return render_template('/shop/fragrance.html',userdeets=userdeets, products=products)
 
 @app.route('/handbags',methods=['GET','POST'])
 def handbags():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/handbags.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='handbag').all()
+    return render_template('/shop/handbags.html',userdeets=userdeets, products=products)
 
 @app.route('/men',methods=['GET','POST'])
 def men():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/men.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='men').all()
+    return render_template('/shop/men.html',userdeets=userdeets, products=products )
 
 @app.route('/suits',methods=['GET','POST'])
 def suits():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/suits.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='suits').all()
+    return render_template('/shop/suits.html',userdeets=userdeets, products=products)
 
 @app.route('/shoes',methods=['GET','POST'])
 def shoes():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/shoes.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='shoes').all()
+    return render_template('/shop/shoes.html',userdeets=userdeets, products=products)
 
 @app.route('/watches',methods=['GET','POST'])
 def watches():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/watches.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='watches').all()
+    return render_template('/shop/watches.html',userdeets=userdeets, products=products)
 
 @app.route('/women',methods=['GET','POST'])
 def women():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    return render_template('/shop/women.html',userdeets=userdeets)
+    products = db.session.query(Product).filter(Product.category =='women').all()
+    return render_template('/shop/women.html',userdeets=userdeets, products=products)
 
 
 

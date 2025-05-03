@@ -25,6 +25,7 @@ class Product(db.Model):
     product_name=db.Column(db.String(300),nullable=False)
     front_img=db.Column(db.String(300),nullable=False)
     back_img=db.Column(db.String(300),nullable=False)
+    category=db.Column(db.String(300),nullable=False)
     price=db.Column(db.Float())
     delprice=db.Column(db.Float())
     seller_name = db.Column(db.String(300), nullable=False)

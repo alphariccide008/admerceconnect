@@ -25,7 +25,23 @@
                         <div class="mb-3 pt-3">
                           {{ upload.quantity.label}}
                           {{ upload.quantity(class_='form-control', placeholder='quantity')}} 
-                        </div> 
+                        </div>
+                        <div class="mb-3 pt-3">
+                            <label for="category">Category</label>
+                            <select id="category" class="form-control" name="category">
+                                <option value="">choose a category</option>
+                                <option value="men">Men</option>
+                                <option value="women">Women</option>
+                                <option value="Jewelries">Jewelries</option>
+                                <option value="handbag">Handbag</option>
+                                <option value="fragrance">Fragrance</option>
+                                <option value="suits">Suits</option>
+                                <option value="watches">Watches</option>
+                                <option value="shoes">Shoes</option>
+                            </select>
+
+                          </div>
+
                           <div class="mb-3 pt-3">
                               {{ upload.productdescription.lable}}
                               {{ upload.productdescription(class_='form-control', placeholder='Description of the project')}} 
