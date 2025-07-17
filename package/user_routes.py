@@ -38,7 +38,8 @@ def login_required(f):
 @app.route('/',methods=['POST','GET'])
 def landing():
     config_items=app.config
-    return render_template('/landing.html')
+    advert = db.session.query(Adverts).all()
+    return render_template('/landing.html', advert=advert)
 
 @app.route('/upload',methods=['POST','GET'])
 def upload():
@@ -120,7 +121,7 @@ def login():
             hashed_pwd=userdeets.password
             if check_password_hash(hashed_pwd,pwd) == True:
                 session['userloggedin']=userdeets.user_id
-                return redirect('/index')
+                return redirect('/shop')
             else:
                 flash('Invalid Login Credentials,Try Again Or Reset Password')
                 return redirect('/login')
@@ -151,7 +152,7 @@ def reg():
             return redirect('/login')
         else:
             flash('Error With Database')
-            return render_template('/reg.html',usereg=usereg)
+    return render_template('/reg.html',usereg=usereg)
 
 
 @app.route('/jobs',methods=['GET','POST'])
@@ -160,6 +161,11 @@ def job():
     userdeets =db.session.query(User).get_or_404(id)
     jb= db.session.query(Job).all()
     return render_template('/job_index.html',jb=jb,userdeets=userdeets)
+
+@app.route('/findjobs')
+def findjob():
+    jb= db.session.query(Job).all()
+    return render_template('/findjob.html',jb=jb)
 
 @app.route('/accesories',methods=['GET','POST'])
 def accesories():

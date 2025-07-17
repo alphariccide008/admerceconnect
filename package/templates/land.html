@@ -8,6 +8,20 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/all.min.css">
     <link rel="stylesheet" href="/static/css/job.css">
     <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="icon" type="image/png" href="/static/img1/images/logo.png">
+
+    <!-- Start of LiveChat (www.livechat.com) code -->
+<script>
+    window.__lc = window.__lc || {};
+    window.__lc.license = 19236995;
+    window.__lc.integration_name = "manual_onboarding";
+    window.__lc.product_name = "livechat";
+    ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+</script>
+<noscript><a href="https://www.livechat.com/chat-with/19236995/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+<!-- End of LiveChat code -->
+
+    
 	<style type="text/css">
 		/* div{
 			min-height: 100px;
@@ -53,7 +67,7 @@
 			background-image: linear-gradient(to right, rgba(27, 30, 33, 0.7),rgba(43, 47, 51, 0.7)10%), url("/static/images/main1.jpg");
 			background-size: cover;
 			background-position: center;
-			min-height:950px;
+			min-height:700px;
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			font-family: sans-serif;
@@ -306,6 +320,16 @@
             grid-template-columns: 1fr 1fr;
             grid-gap: 20px;
         }
+        .second{
+			background-image: linear-gradient(to right, rgba(27, 30, 33, 0.7),rgba(43, 47, 51, 0.7)30%), url("/static/jobimg/2.jpg");
+			background-size: cover;
+			background-position: center;
+			height:500px;
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			font-family: sans-serif;
+		
+		}
 
         .w3l-footer-22 .footer-hny-ul li a {
             font-style: normal;
@@ -453,16 +477,45 @@
                 margin-right: 4px;
             }
             }
+            .ab-content-img {
+            background: url("static/images/banner9.jpg") no-repeat center;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            -moz-background-size: cover;
+            -ms-background-size: cover;
+            min-height: 27em;
+        }
+        .ab-content h4 {
+            font-size: 1.2em;
+            color: #4c4d4e;
+            margin: 2em 0 1em 0;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        #preloader{
+            opacity: 80%;
+            background: #000 url(/static/img1/images/gif4.gif) no-repeat center center;
+            background-size: 15%;
+            height: 100vh;
+            width: 100%;
+            position: fixed;  
+            z-index: 100;
+        }
 	</style>
 </head>
 <body>
+    <div id="preloader"></div>
 	<div class="container-fluid">
 		<!-- This is the Navbar -->
 		<div class="row custom">
 			<div class="col">
-				<nav class="navbar navbar-expand-lg row bg-light">
+				<nav class="navbar navbar-expand-lg  row bg-light" style="position: fixed; width: 100%;">
                     <div class="container-fluid">
-                        <h1><a class="navbar-brand" href="#"><span class="custom">AdmerceConnect</span></a></h1>
+                       <div style="display: flex;">
+                        <img src="/static/img1/images/logo.png" alt="" style="height: 40px; width: 50%;">
+                        <h4><a class="" href="#"><span class="custom">AdMerce<br><i><span style="font-size: 14px;">Connect</i></span></span></a></h4>
+                       </div>
                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -476,6 +529,12 @@
                                 </li>
                                 <li class="nav-item px-3">
                                     <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Login</a>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <a class="nav-link active" aria-current="page" href="{{url_for('findjob')}}">Job</a>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Contact</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
@@ -492,20 +551,22 @@
 
         
 		<!-- this is the first section -->
-        {% block first%}
+        {% block banner%}
 		
         {%endblock%}
 		<!-- this is second section -->
-        {%block second%}
+        {%block one%}
       
        {%endblock%}
 
 <!-- This is the thrid sec -->
-       {%block third%}
+       {%block two%}
        
        {%endblock%}
 <!-- This is the end of the Thrid section -->
-
+        {%block three%}
+            
+        {%endblock%}
 
 
 
@@ -628,6 +689,13 @@
             </p>
         </div>
     </div>
+    <script async src='../d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js'></script>
+    <script>
+      var wa_btnSetting = {"btnColor":"#16BE45","ctaText":"WhatsApp Us","cornerRadius":40,"marginBottom":40,"marginLeft":20,"marginRight":20,"btnPosition":"left","whatsAppNumber":"12342280309","welcomeMessage":"Hello","zIndex":999999,"btnColorScheme":"light"};
+      window.onload = () => {
+        _waEmbed(wa_btnSetting);
+      };
+    </script>
 </footer>
 <!-- Footer end -->
 
@@ -648,7 +716,7 @@
 <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
   <div class="offcanvas-header">
     <h1 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Cart<span class="custom">Aril</span></h1>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></butjqton>
   </div>
   <div class="offcanvas-body">
     <div class="row">
@@ -660,5 +728,92 @@
     </div>
   </div>
 </div>
+
+
+<button style="background-color: rgb(220, 176, 32) ;" onclick="topFunction()" id="movetop" title="Go to top">
+    &#10548;
+  </button>
+  <!-- <script>
+  
+    </script> -->
+    <!-- /move top -->
+    <script>
+        (function (w, d, s, u) {
+        w.gbwawc = {
+        url: u,
+        options: {
+                waId: "+12153308842",
+                siteName: "cryptocustomerservice",
+                siteTag: "Online",
+                siteLogo: "https://assets.gallabox.com/gb-home/wa-chat-widget/bot+avatars/2.png",
+                widgetPosition: "LEFT",
+                triggerMessage: "Available to assist",
+                welcomeMessage: "welcome to Crypto capital investment, how may i be off assistant",
+                brandColor: "#25D366",
+                messageText: "",
+                replyOptions: ['looking to make an investment','issues with your log in'],
+            },
+        };
+        var h = d.getElementsByTagName(s)[0],
+        j = d.createElement(s);
+        j.async = true;
+        j.src = u + "/whatsapp-widget.min.js?_=" + Math.random();
+        h.parentNode.insertBefore(j, h);
+        })(window, document, "script", "https://waw.gallabox.com");
+    </script>
+<script>
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () {
+        scrollFunction()
+      };
+
+      function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          document.getElementById("movetop").style.display = "block";
+        } else {
+          document.getElementById("movetop").style.display = "none";
+        }
+      }
+
+      // When the user clicks on the button, scroll to the top of the document
+      function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+
+    var loader = document.getElementById("preloader");
+
+    window.addEventListener("load",function(){
+        loader.style.display ="none"
+    })
+    const sections = document.querySelectorAll('section');
+    const options = {
+        threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+    var loader = document.getElementById("preloader");
+    
+    window.addEventListener("load",function(){
+        loader.style.display ="none"
+    })
+    
+
+   
+   
+
+  </script>
+
 </body>
 </html>
