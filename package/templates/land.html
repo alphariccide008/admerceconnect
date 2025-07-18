@@ -26,7 +26,7 @@
 		/* div{
 			min-height: 100px;
 			border: 1px solid red;
-		} */
+		}  */
         
 		
 		
@@ -330,6 +330,14 @@
 			font-family: sans-serif;
 		
 		}
+        .advert{
+            background-image: url("/static/jobimg/advert.jpg");
+			background-size: cover;
+			background-position: contain;
+			height:400px;
+			background-repeat: no-repeat;
+			
+        }
 
         .w3l-footer-22 .footer-hny-ul li a {
             font-style: normal;
@@ -493,7 +501,7 @@
             text-transform: uppercase;
             font-weight: 600;
         }
-        #preloader{
+        /* #preloader{
             opacity: 80%;
             background: #000 url(/static/img1/images/gif4.gif) no-repeat center center;
             background-size: 15%;
@@ -501,7 +509,26 @@
             width: 100%;
             position: fixed;  
             z-index: 100;
-        }
+        } */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+            z-index: 100;
+            background-color: #a2841b;
+            color: #fff;
+            border: none;
+            padding: 15px 18px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+            transition: all 0.3s ease;
+            }
+        #scrollToTopBtn:hover {
+            background-color: #d99920;
+            }
 	</style>
 </head>
 <body>
@@ -534,7 +561,10 @@
                                     <a class="nav-link active" aria-current="page" href="{{url_for('findjob')}}">Job</a>
                                 </li>
                                 <li class="nav-item px-3">
-                                    <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Contact</a>
+                                    <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Shop</a>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <a class="nav-link active" aria-current="page" href="#footer">Contact</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
@@ -546,6 +576,8 @@
                 </nav>
 			</div>
 		</div>
+
+        <button id="scrollToTopBtn" title="Go to top">↑</button>
 
         <!-- Navbar ends here -->
 
@@ -572,7 +604,7 @@
 
 
 <!-- Footer start -->
-<footer class="  text-center row footer-emp-w3layouts bg-dark dotts py-lg-5">
+<footer id="footer" class="  text-center row footer-emp-w3layouts bg-dark dotts py-lg-5">
     <div class="container-fluid px-lg-5 px-3">
         <div class="row footer-top">
             <div class="col-lg-3 footer-grid-wthree-w3ls px-2">
@@ -730,9 +762,7 @@
 </div>
 
 
-<button style="background-color: rgb(220, 176, 32) ;" onclick="topFunction()" id="movetop" title="Go to top">
-    &#10548;
-  </button>
+
   <!-- <script>
   
     </script> -->
@@ -814,6 +844,23 @@
    
 
   </script>
+  <script>
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+  
+    window.onscroll = function () {
+      // Show button when scrolled down 300px
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    };
+  
+    scrollToTopBtn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+  
 
 </body>
 </html>
