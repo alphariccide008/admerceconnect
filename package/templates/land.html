@@ -557,9 +557,7 @@
                                 <li class="nav-item px-3">
                                     <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Login</a>
                                 </li>
-                                <li class="nav-item px-3">
-                                    <a class="nav-link active" aria-current="page" href="{{url_for('findjob')}}">Job</a>
-                                </li>
+                               
                                 <li class="nav-item px-3">
                                     <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Shop</a>
                                 </li>
@@ -675,12 +673,8 @@
                     <li>
                         <a href="about.html">About</a>
                     </li>
-                    <li>
-                        <a href="404.html">Error</a>
-                    </li>
-                    <li>
-                        <a href="pricing.html">Job Packages</a>
-                    </li>
+                   
+                    
                     <li>
                         <a href="contact.html">Contact Us</a>
                     </li>
@@ -692,9 +686,7 @@
                     <li>
                         <a href="contact.html">Support</a>
                     </li>
-                    <li>
-                        <a href="employer_list.html">For Employers</a>
-                    </li>
+                   
                 </ul>
 
                 <div class="clearfix"></div>
@@ -752,10 +744,12 @@
   </div>
   <div class="offcanvas-body">
     <div class="row">
-    	<a href="{{url_for('landing')}}" class="form control btn btn-outline-dark mb-2"><i class="fa-solid fa-home"></i> Home</a>
-        <a href="{{url_for('reg')}}" class="form control btn btn-outline-dark mb-2"> <i class="fa-solid fa-book"></i> Register</a>    
+    	<a href="{{url_for('landing')}}" class="form control my-2 btn btn-outline-dark mb-2"> Home</a>
+        <a href="{{url_for('reg')}}" class="form control btn my-2 btn-outline-dark mb-2"> Register</a>    
 
-        <a href="{{url_for('login')}}" class="form control btn btn-outline-dark mb-2"><i class="fa-solid fa-user"></i> Login</a>    
+        <a href="{{url_for('login')}}" class="form control my-2 btn btn-outline-dark mb-2"> Login</a> 
+        <a href="{{url_for('shop')}}" class="form control my-2 btn btn-outline-dark mb-2"> Shop</a> 
+
 
     </div>
   </div>
