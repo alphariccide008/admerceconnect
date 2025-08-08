@@ -4,15 +4,16 @@ db=SQLAlchemy()
 
 class User(db.Model):
     user_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
-    firstname=db.Column(db.String(60),nullable=False)
-    lastname=db.Column(db.String(60),nullable=False)
-    email=db.Column(db.String(128),unique=True,nullable=False)
+    session_id = db.Column(db.String(128), unique=True, nullable=True)
+    firstname=db.Column(db.String(60),nullable=True)
+    lastname=db.Column(db.String(60),nullable=True)
+    email=db.Column(db.String(128),unique=True,nullable=True)
     city=db.Column(db.String(300),nullable=True)
-    password=db.Column(db.String(300),nullable=False)
-    phone = db.Column(db.BigInteger(),unique=True,nullable=False)  #phone number should be unique
-    address= db.Column(db.String(300),nullable=False)
+    password=db.Column(db.String(300),nullable=True)
+    phone = db.Column(db.BigInteger(),unique=True,nullable=True)  #phone number should be unique
+    address= db.Column(db.String(300),nullable=True)
     status=db.Column(db.String(300),nullable=True)
-    username=db.Column(db.String(100),nullable=False)
+    username=db.Column(db.String(100),nullable=True)
     date_created=db.Column(db.DateTime,default=datetime.utcnow)
 
 class Admin(db.Model):
@@ -26,6 +27,7 @@ class Product(db.Model):
     front_img=db.Column(db.String(300),nullable=False)
     back_img=db.Column(db.String(300),nullable=False)
     category=db.Column(db.String(300),nullable=False)
+    size=db.Column(db.String(100),nullable=False)
     price=db.Column(db.Float())
     delprice=db.Column(db.Float())
     seller_name = db.Column(db.String(300), nullable=False)
@@ -37,6 +39,7 @@ class Product(db.Model):
 class Cart(db.Model):
     cart_id=db.Column(db.Integer(),primary_key=True,autoincrement=True)
     price=db.Column(db.Float(),nullable=False)
+    size=db.Column(db.String(300),nullable=False)
     product_name=db.Column(db.String(300),nullable=False)
     quantity=db.Column(db.Integer(),nullable=False)
     description=db.Column(db.String(300),nullable=False)

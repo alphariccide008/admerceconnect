@@ -1,65 +1,76 @@
 {%extends 'land.html'%}
 
 {%block banner%}
-	<div class="row first-sec">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="row justify-content-center">
-                    
-                    <div class="col-md-6">
-                        <form action="#" class="card form mx-3 p-5" method="POST">
-                            {%set m= get_flashed_messages(with_categories=True)%}
-                                {%if m:%}
-                                    {%for x,y in m%}
-                                        {% if x =="error"%}
-                                            <div class="alert alert-info">{{y}}</div>
-                                        {%else:%}
-                                            <div class="alert alert-info">{{y}}</div>
-                                        {%endif%}
-                                    {%endfor%}
-                                    {%endif%}
-                            <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
-                            <h3 class="text-center">Welcome Back!</h3>
-                            <div>
-                                {{log.email.label}}
-                                {{log.email(class_=('form-control my-3 cust-input'))}}
-                            </div>
-                            <div>
-                                {{log.pword.label}}
-                                {{log.pword(class_=('form-control cust-input'))}}
-                            </div>
-                            <div class="pt-3">
-                               
-                                <a href="#" class="custom">forget password ?</a>
-                            </div>
-                            <div class="my-3">
-                                {{log.btnlog(class_=('cust-btn text-white form-control'))}}
-                                
-                            </div>
-                            <a href="{{url_for('reg')}}" class="custom1">Not a member? Join now</a>
-                        </form>
-                    </div>
+<div class="col-md-8 login px-2 px-md-0">
+    <div class="row my-5 justify-content-center">
+        <div class="col-md-5">
+            <form action="#" style="font-size: 14px; color: #757575;" class="card form mx-3 login py-5 px-3 text" method="POST">
+                {%set m= get_flashed_messages(with_categories=True)%}
+                    {%if m:%}
+                        {%for x,y in m%}
+                            {% if x =="error"%}
+                                <div class="alert alert-info">{{y}}</div>
+                            {%else:%}
+                                <div class="alert alert-info">{{y}}</div>
+                            {%endif%}
+                        {%endfor%}
+                        {%endif%}
+                <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                <h5 class="text-center">Welcome Back!</h5>
+                <div>
+                    {{log.email.label}}
+                    {{log.email(class_=('form-control my-3 cust-input'))}}
                 </div>
-            </div>
+                <div>
+                    {{log.pword.label}}
+                    {{log.pword(class_=('form-control cust-input'))}}
+                </div>
+                <div class="pt-3">
+                   
+                    <h6><a href="#" class="" style="text-decoration: none; color: rgb(232, 185, 46); font-size: 12px; ">forget password ?</a></h6>
+                </div>
+                <div class="my-3">
+                    {{log.btnlog(class_=('btn btn-dark text-white form-control'))}}
+                    
+                </div>
+                <h6><a href="{{url_for('reg')}}" style="text-decoration: none;color: #757575; font-size: 12px;">Not a member? <span style="color:  rgb(232, 185, 46);">Join now</span></a></h6>
+            </form>
         </div>
-		
-        
-      
-
-        
-
-
-
-
-
-
-
-
-	    <script src="/static/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>     
-
-
-
-
     </div>
+</div>
 
 {%endblock%}
+
+
+<form action="#" class="card form mx-3 p-5" method="POST">
+    {%set m= get_flashed_messages(with_categories=True)%}
+        {%if m:%}
+            {%for x,y in m%}
+                {% if x =="error"%}
+                    <div class="alert alert-info">{{y}}</div>
+                {%else:%}
+                    <div class="alert alert-info">{{y}}</div>
+                {%endif%}
+            {%endfor%}
+            {%endif%}
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <h3 class="text-center">Welcome Back!</h3>
+    <div>
+        {{log.email.label}}
+        {{log.email(class_=('form-control my-3 cust-input'))}}
+    </div>
+    <div>
+        {{log.pword.label}}
+        {{log.pword(class_=('form-control cust-input'))}}
+    </div>
+    <div class="pt-3">
+       
+        <a href="#" class="custom">forget password ?</a>
+    </div>
+    <div class="my-3">
+        {{log.btnlog(class_=('cust-btn text-white form-control'))}}
+        
+    </div>
+    <a href="{{url_for('reg')}}" class="custom1">Not a member? Join now</a>
+</form>
+

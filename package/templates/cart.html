@@ -23,7 +23,7 @@
                     <table class="table table-borderless">
                         <tbody>
                             {% for item in items %}
-                            <tr class="section-description pt-4">
+                            <tr class="d-none d-md-block section-description pt-4">
                                 <td class="pt-4" style="font-size: 12px;">
                                   <a href="{{ url_for('remove_from_cart', item_id=item.goods_id) }}" class="text-danger" style="cursor: pointer;">
                                     <i class="fas fa-trash"></i>
@@ -35,6 +35,20 @@
                                 <td class="pt-4">{{ item.description }}</td>
                                 <td class="p-4">&#8358;{{ item.price * item.quantity }}0</td>
                                 <td class="p-4">{{ item.quantity }}</td>
+                                <td class="p-4">{{ item.size }}</td>
+                            </tr>
+                            <tr class="d-block d-md-none section-description pt-4">
+                                <td class="pt-4" style="font-size: 12px;">
+                                    <a href="{{ url_for('remove_from_cart', item_id=item.goods_id) }}" class="text-danger" style="cursor: pointer;">
+                                        <i class="fas fa-trash"></i></a>
+                                        <img src="/static/uploads/{{ item.img or 'default-image.jpg' }}" class="img-fluid rounded" style="" alt="{{ item.description }}">
+                                    <p>{{ item.description}}</p>
+                                    <p>&#8358;{{ item.price * item.quantity }}0</p>
+                                    <div class="d-flex">
+                                        <p>Quantity : {{ item.quantity }}</p>
+                                        <p class="px-2">Size : {{ item.size }}</p>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

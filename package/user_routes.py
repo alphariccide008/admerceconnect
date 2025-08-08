@@ -5,12 +5,16 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from flask_mail import Message
 from package import mail 
 from flask import render_template,request,abort,redirect,flash,make_response,session,url_for,jsonify
-
+import uuid
 #local Imports
 
 from package import app,csrf
 from package.models import db,User,Job,Product,Cart, Adverts, Transaction
 from package.forms import *
+
+
+
+
 
 #create after_request to clear cache
 @app.after_request
@@ -24,6 +28,7 @@ def generate_string(howmany):#call this function as renerate_string(10)
     return ''.join(x)
 
 
+
 #create decorator to check for logins
 def login_required(f):
     @wraps(f)
@@ -35,11 +40,28 @@ def login_required(f):
             return redirect('/login')
     return login_check    
 
+
+
+def generate_otp():
+    return str(random.randint(100000, 999999))
+
+@app.before_request
+def create_session_user():
+    if 'userloggedin' not in session:
+        session_id = str(uuid.uuid4())
+        user = User(session_id=session_id)  # assuming session_id is a nullable column in User
+        db.session.add(user)
+        db.session.commit()
+        session['userloggedin'] = user.user_id  # store the temporary user ID
+
 @app.route('/',methods=['POST','GET'])
 def landing():
     config_items=app.config
+    id= session.get('userloggedin')
     advert = db.session.query(Adverts).all()
-    return render_template('/landing.html', advert=advert)
+    userdeets =db.session.query(User).get_or_404(id)
+    shopdeets= db.session.query(Product).limit(4).all()
+    return render_template('/landing.html', advert=advert, userdeets=userdeets, shopdeets=shopdeets)
 
 @app.route('/upload',methods=['POST','GET'])
 def upload():
@@ -98,7 +120,8 @@ def index():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
     advert = db.session.query(Adverts).all()
-    return render_template('/index.html',userdeets=userdeets, advert=advert)
+    shopdeets= db.session.query(Product).limit(4).all()
+    return render_template('/index.html',userdeets=userdeets, advert=advert, shopdeets=shopdeets)
 
 
 
@@ -110,9 +133,11 @@ def copy():
 
 @app.route('/login',methods=['POST','GET'])
 def login():
+    id= session.get('userloggedin')
+    userdeets =db.session.query(User).get_or_404(id)
     log=LogForm()
     if request.method=="GET":
-        return render_template('/login.html',log=log)
+        return render_template('/login.html',log=log, userdeets=userdeets)
     else:
         email=request.form.get('email')
         pwd=request.form.get('pword')
@@ -131,9 +156,11 @@ def login():
 
 @app.route('/reg',methods=['POST','GET'])
 def reg():
+    id= session.get('userloggedin')
+    userdeets =db.session.query(User).get_or_404(id)
     usereg=RegForm()   
     if request.method =="GET":
-        return render_template('/reg.html',usereg=usereg)
+        return render_template('/reg.html',usereg=usereg, userdeets=userdeets)
     else:
         if usereg.validate_on_submit:
             fname=request.form.get('fname')
@@ -222,15 +249,21 @@ def women():
     products = db.session.query(Product).filter(Product.category =='women').all()
     return render_template('/shop/women.html',userdeets=userdeets, products=products)
 
+@app.route('/all_peoduct',methods=['GET','POST'])
+def all_product():
+    id= session.get('userloggedin')
+    userdeets =db.session.query(User).get_or_404(id)
+    products = db.session.query(Product).all()
+    return render_template('/shop/all_product.html',userdeets=userdeets, products=products)
 
-
+# landing route
 
 
 @app.route('/shop',methods=['GET','POST'])
 def shop():
     id= session.get('userloggedin')
     userdeets =db.session.query(User).get_or_404(id)
-    shopdeets= db.session.query(Product).all()
+    shopdeets= db.session.query(Product).limit(4).all()
     return render_template('/shop/shop1.html',userdeets=userdeets,shopdeets=shopdeets)
 
 @app.route('/logout')
@@ -298,7 +331,7 @@ def editp():
 
 
 # All cart route 
-@app.route("/add-to-cart/<int:item_id>")
+@app.route("/add-to-cart/<int:item_id>", methods=['POST','GET'])
 def add_to_cart(item_id):
     user_id = session.get('userloggedin')  # Assuming your session key is 'userloggedin'
     if not user_id:
@@ -306,21 +339,24 @@ def add_to_cart(item_id):
 
     # Fetch the product from DB
     product = Product.query.get_or_404(item_id)
-
+    size = request.form.get('size')
+    quantity = request.form.get('quantity')
     # Check if the product already exists in the cart
-    existing_item = Cart.query.filter_by(user_id=user_id, goods_id=item_id).first()
+    existing_item = Cart.query.filter_by(user_id=user_id, goods_id=item_id, size=size, quantity=quantity).first()
 
     if existing_item:
         # If it exists, increment the quantity
         existing_item.quantity += 1
     else:
+        
         # Otherwise, add it as a new item
         new_item = Cart(
             user_id=user_id,
             goods_id=product.product_id,
             img=product.front_img,  # Assuming your product model has an 'img' field
             price=product.price,
-            quantity=1,
+            quantity=quantity,
+            size=size,
             product_name=product.product_name,
             seller_name=product.seller_name,
             seller_number=product.seller_number,
@@ -342,7 +378,6 @@ def inject_cart_count():
 
 
 @app.route("/cart")
-@login_required
 def cart():
     user_id = session.get('userloggedin')  # Get user ID from session
     if not user_id:

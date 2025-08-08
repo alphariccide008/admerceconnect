@@ -58,7 +58,7 @@
                                         <div class="boxhny-content">
                                             <h3 class="title">Product</h3>
                                         </div>
-                                    </a>
+                                    </a>whin
                                 </div>
                                 <h4><a href="{{url_for('shoes')}}">Shoes</a></h4>
         
@@ -145,36 +145,60 @@
                     <!-- /row-->
                     <div class="ecom-products-grids row mt-lg-5 mt-3 justify-content-center">
                         {% if shopdeets %}
-                            {%for x in shopdeets%}
-                                <div class="col-lg-3 col-6 product-incfhny mt-4">
-                                    <div class="product-grid2 transmitv">
-                                        <div class="product-image2">
-                                            <a href="#">
-                                                <img class="pic-1 img-fluid" src="/static/uploads/{{x.front_img}}">
-                                                <img class="pic-2 img-fluid" src="/static/uploads/{{x.back_img}}">
-                                            </a>
-                                            <ul class="social">
-                                                    <li><a href="#" data-tip="Quick View"><span class="fa fa-eye"></span></a></li>
-
-                                                    <li><a href="{{ url_for('cart')}}" data-tip="Add to Cart"><span class="fa fa-shopping-bag"></span></a>
-                                                    </li>
-                                            </ul>
-                                            <div class="transmitv single-item">
-                                                
-                                                        <a id="btn" href="{{ url_for('add_to_cart', item_id=x.product_id) }}" class="transmitv-cart ptransmitv-cart add-to-cart">
-                                                            Add to Cart
-                                                        </a>
-                                                    
-                                                </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h3 class="title">{{ x.product_name}}</h3>
-                                            <span class="price"><del>&#8358; {{x.delprice}}0</del>&#8358; {{ x.price }}0</span>
-                                        </div>
-                                        <div id="feedback"></div>
-                                    </div>
+                        {% for x in shopdeets %}
+                        
+                        
+                          <div class="col-lg-3 col-6 product-incfhny mt-4">
+                            <div class="product-grid2 transmitv">
+                                <form action="{{ url_for('add_to_cart', item_id=x.product_id) }}" method="post">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                              <div class="product-image2">
+                                <a href="#">
+                                  <img class="pic-1 img-fluid" src="/static/uploads/{{ x.front_img }}">
+                                  <img class="pic-2 img-fluid" src="/static/uploads/{{ x.back_img }}">
+                                </a>
+                        
+                                <ul class="social">
+                                  <li>
+                                    <a href="#" data-tip="Quick View"><span class="fa fa-eye"></span></a>
+                                  </li>
+                                </ul>
+                        
+                                <div class="transmitv single-item">
+                                  <button type="submit" class="transmitv-cart bg-danger ptransmitv-cart add-to-cart" style="border: none; background: none;">
+                                    <span class="fa fa-shopping-bag"></span> Add to Cart
+                                  </button>
                                 </div>
-                            {%endfor%}
+                              </div>
+                              <div class="mt-2">
+                                <input type="text" name="quantity" class="form-control" value="1" placeholder="Quantity">
+                              </div>
+                        
+                              <div class="mt-2">
+                                <select name="size" class="form-control" required>
+                                  <option value="">Select size</option>
+                                  {% for size in x.size %}
+                                  <option value="{{ size }}">{{ size }}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            
+                        
+                              <div class="product-content">
+                                <h3 class="title">{{ x.product_name }}</h3>
+                                <span class="price">
+                                  <del>&#8358; {{ x.delprice }}0</del>
+                                  &#8358; {{ x.price }}0
+                                </span>
+                              </div>
+                        
+                              <div id="feedback"></div>
+                            </form>
+                            </div>
+                          </div>
+                      
+                        {% endfor %}
+                        
                         {%else%}
                                 <div class="text-center">
                                     <h4 class="alert alert-info">No Product Available check back shortly</h4>
@@ -198,9 +222,9 @@
                 <h1 class="text-white" style="padding-top: 130px;">
                     Tons of Products & Options to
                     <span>change</span></h1>
-                <p>Ea consequuntur illum facere aperiam sequi optio consectetur adipisicing elitFuga, suscipit totam
-                    animi consequatur saepe blanditiis.Lorem ipsum dolor sit amet,Ea consequuntur illum facere
-                    aperiam sequi optio consectetur adipisicing elit..</p>
+                <p>Tons of products, countless options—tailored to your style and needs.
+                    We’re committed to delivering variety, quality, and convenience in every order. Whether you're looking for something trendy or timeless, we’ve got it all.
+                    Shop with ease. Discover with joy.</p>
                 <a href="#" class="btn btn-outline-light px-3 py-2" style="border-radius: 10px;">
                     Shop Now
                 </a>
